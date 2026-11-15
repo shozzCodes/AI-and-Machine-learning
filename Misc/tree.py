@@ -76,19 +76,43 @@ class tree:
 
         return self.isBalanced(root.left) and self.isBalanced(root.right)
 
+    def preOrd(self, root:Node, ans:list):
+        if root is None:
+            ans.append(-1)
+            return
+        
+        ans.append(root.data)
+        self.preOrd(root.left, ans)
+        self.preOrd(root.right, ans)
+    def isSameTree(self, p: Node | None, q: Node | None) -> bool:
+        x = []
+        y = []
+        self.preOrd(p, x)
+        self.preOrd(q, y)
+        return x == y
             
         
-# preorder = [5, 12, 7, 17, None, None, 23, None, None, None, 13, 14, 27, None, None, 3,None, None,  2, 8, None, None, 11, None, None]
-preorder = [
-    1,
-    2, None, None,
-    3, 4, None, None, None
-]
-# root = [1,2,3,4,5,6,7]
+# # preorder = [5, 12, 7, 17, None, None, 23, None, None, None, 13, 14, 27, None, None, 3,None, None,  2, 8, None, None, 11, None, None]
+# preorder = [
+#     1,
+#     2, None, None,
+#     3, 4, None, None, None
+# ]
+# # root = [1,2,3,4,5,6,7]
 t = tree()
-r1 = t.build(preorder)
-t.preOrder(r1)
-print()
-print(t.isBalanced(r1))
+# r1 = t.build(preorder)
+# t.preOrder(r1)
 # print()
-# t.bfs(r1) #Output: [5, 12, 13, 7, 14, 2, 17, 23, 27, 3, 8, 11]
+# print(t.isBalanced(r1))
+# # print()
+# # t.bfs(r1) #Output: [5, 12, 13, 7, 14, 2, 17, 23, 27, 3, 8, 11]
+
+tree1 = [1, 2, None, None, None]
+p = t.build(tree1)
+tree2 = [1, None, 2, None, None]
+q = t.build(tree2)
+t.preOrder(p)
+print()
+t.preOrder(q)
+print()
+print(t.isSameTree(p,q))
