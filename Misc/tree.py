@@ -57,21 +57,38 @@ class tree:
         helper(root)
         return lev
 
+    def depth(self,r:Node):
+        if r is not None:
+            left = self.depth(r.left)
+            right = self.depth(r.right)
+            return 1 + max(left, right)
+        else:
+            return 0
+        
+    def isBalanced(self, root: Optional[Node]) -> bool:
+        if root is None:
+            return True
+        left = self.depth(root.left)
+        right = self.depth(root.right)
+        diff = left - right
+        if abs(diff) > 1:
+            return False
+
+        return self.isBalanced(root.left) and self.isBalanced(root.right)
+
             
         
 # preorder = [5, 12, 7, 17, None, None, 23, None, None, None, 13, 14, 27, None, None, 3,None, None,  2, 8, None, None, 11, None, None]
 preorder = [
-    1, 
-    2, 4, None, None, 5, None, None,
-    3, 6, None, None, 7, None, None
+    1,
+    2, None, None,
+    3, 4, None, None, None
 ]
 # root = [1,2,3,4,5,6,7]
 t = tree()
 r1 = t.build(preorder)
-# t.preOrder(r1)
-# print()
-t.bfs(r1)
+t.preOrder(r1)
 print()
-level = t.level(r1)
-print(level)
+print(t.isBalanced(r1))
+# print()
 # t.bfs(r1) #Output: [5, 12, 13, 7, 14, 2, 17, 23, 27, 3, 8, 11]
