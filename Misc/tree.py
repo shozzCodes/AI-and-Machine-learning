@@ -110,14 +110,18 @@ t = tree()
 # # print()
 # # t.bfs(r1) #Output: [5, 12, 13, 7, 14, 2, 17, 23, 27, 3, 8, 11]
 
-tree1 = [1, 2, None, None, None]
-p = t.build(tree1)
-tree2 = [1, None, 2, None, None]
-q = t.build(tree2)
-t.preOrder(p)
-print()
-arr = t.preOrd(p)
-print(arr)
-# t.preOrder(q)
+# tree1 = [1, 2, None, None, None]
+# p = t.build(tree1)
+# tree2 = [1, None, 2, None, None]
+# q = t.build(tree2)
+# t.preOrder(p)
 # print()
-# print(t.isSameTree(p,q))
+# arr = t.preOrd(p)
+# print(arr)
+# # t.preOrder(q)
+# # print()
+# # print(t.isSameTree(p,q))
+arr1 = [1,2,3]
+arr2 = []
+arr2.append(arr1)
+print(arr2)
