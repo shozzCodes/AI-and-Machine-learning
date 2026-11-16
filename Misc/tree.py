@@ -76,14 +76,17 @@ class tree:
 
         return self.isBalanced(root.left) and self.isBalanced(root.right)
 
-    def preOrd(self, root:Node, ans:list):
-        if root is None:
-            ans.append(-1)
-            return
-        
-        ans.append(root.data)
-        self.preOrd(root.left, ans)
-        self.preOrd(root.right, ans)
+    def preOrd(self, root:Node):
+        arr = []
+        def helper(r:Node):
+            if r is not None:
+                arr.append(r.data)
+                helper(r.left)
+                helper(r.right)
+            else:
+                arr.append(None)
+        helper(root)
+        return arr
     def isSameTree(self, p: Node | None, q: Node | None) -> bool:
         x = []
         y = []
@@ -113,6 +116,8 @@ tree2 = [1, None, 2, None, None]
 q = t.build(tree2)
 t.preOrder(p)
 print()
-t.preOrder(q)
-print()
-print(t.isSameTree(p,q))
+arr = t.preOrd(p)
+print(arr)
+# t.preOrder(q)
+# print()
+# print(t.isSameTree(p,q))
