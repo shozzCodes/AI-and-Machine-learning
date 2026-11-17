@@ -93,8 +93,53 @@ class tree:
         self.preOrd(p, x)
         self.preOrd(q, y)
         return x == y
-            
         
+    def levelOrder(self, root: Node | None) -> list[list[int]]:
+        if root is None:
+            return []
+        ans = []
+        q = deque()
+        q.append(root)
+        while q:
+            temp = []
+            for _ in range(len(q)):
+                curr:Node = q.popleft()
+                if curr is None:
+                    continue
+                q.append(curr.left)
+                q.append(curr.right)
+                temp.append(curr.data)
+            if temp:
+                ans.append(temp)
+
+        return ans
+
+    def check(self, root:Node):
+        if root is not None:
+            l:Node = root.left
+            r:Node = root.right
+            if l:
+                if l.data > root.data:
+                    return False
+            if r:
+                if r.data < root.data:
+                    return False
+        return True
+    
+    def isValidBST(self, root: Optional[Node]) -> bool:
+        if root is None:
+            return True
+        valid: bool = self.check(root)
+        if not valid:
+            return False
+
+        return self.isValidBST(root.left) and self.isValidBST(root.right)
+
+preorder = [1,2,None,None,3,None,None] 
+t = tree()
+root = t.build(preorder)
+t.bfs(root) 
+print(t.isValidBST(root))
 # # preorder = [5, 12, 7, 17, None, None, 23, None, None, None, 13, 14, 27, None, None, 3,None, None,  2, 8, None, None, 11, None, None]
 # preorder = [
 #     1,
@@ -102,7 +147,7 @@ class tree:
 #     3, 4, None, None, None
 # ]
 # # root = [1,2,3,4,5,6,7]
-t = tree()
+# t = tree()
 # r1 = t.build(preorder)
 # t.preOrder(r1)
 # print()
@@ -121,7 +166,3 @@ t = tree()
 # # t.preOrder(q)
 # # print()
 # # print(t.isSameTree(p,q))
-arr1 = [1,2,3]
-arr2 = []
-arr2.append(arr1)
-print(arr2)
