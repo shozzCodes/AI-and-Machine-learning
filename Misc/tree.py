@@ -113,33 +113,52 @@ class tree:
                 ans.append(temp)
 
         return ans
+    def dfs(self, root:Node)->list:
+        ans = []
+        def helper(root:Node, arr):
+            if root is None:
+                return
+            ans.append(root.data)
+            helper(root.left, ans)
+            helper(root.right, ans)
+        helper(root, ans)
+        return ans
 
-    def check(self, root:Node):
-        if root is not None:
-            l:Node = root.left
-            r:Node = root.right
-            if l:
-                if l.data > root.data:
-                    return False
-            if r:
-                if r.data < root.data:
-                    return False
-        return True
-    
     def isValidBST(self, root: Optional[Node]) -> bool:
-        if root is None:
-            return True
-        valid: bool = self.check(root)
-        if not valid:
-            return False
+        values = self.dfs(root) # list contain preord seq of bst
+        for x in values:
+            def helper(rt:Node):
+                if rt is None:
+                    return True
+                if x != rt.data:
+                    return False
+                elif x < rt.data:
+                    helper(rt.left)
+                elif x > rt.data:
+                    helper(rt.right)
 
-        return self.isValidBST(root.left) and self.isValidBST(root.right)
+            if not helper(root):
+                return False
+        return True
 
-preorder = [1,2,None,None,3,None,None] 
+
+
+
+
+
+# preorder = [10,
+#             5, 2, None, 6, None, None,
+#             8, 11, None, None, None,
+#             15, None, 1, None, None]
+preorder = [2,1,None, None,3,None,None]
 t = tree()
 root = t.build(preorder)
 t.bfs(root) 
+print()
+arr = t.dfs(root)
+print(arr)
 print(t.isValidBST(root))
+# print(t.isValidBST(root))
 # # preorder = [5, 12, 7, 17, None, None, 23, None, None, None, 13, 14, 27, None, None, 3,None, None,  2, 8, None, None, 11, None, None]
 # preorder = [
 #     1,
