@@ -113,6 +113,7 @@ class tree:
                 ans.append(temp)
 
         return ans
+    
     def dfs(self, root:Node)->list:
         ans = []
         def helper(root:Node, arr):
