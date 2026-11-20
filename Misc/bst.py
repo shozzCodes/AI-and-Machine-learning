@@ -40,18 +40,17 @@ class Tree:
             queue.append(curr.right)
 
     def node_path(self, root: TreeNode, tar: int)-> list:
-        path = []
+        path:list = []
+        sol = []
         def dfs(r:TreeNode, t:int):
             if r is None:
-                return False
-            path.append(r.val)
+                return 
+            sol.append(r.val)
             if r.val == t:
-                return True
-            if dfs(r.left,t):
-                return True
-            if dfs(r.right,t):
-                return True
-            path.pop()
+                path.append(sol[:])
+            dfs(r.left, t)
+            dfs(r.right, t)
+            sol.pop()
             
         dfs(root,tar)
         return path
