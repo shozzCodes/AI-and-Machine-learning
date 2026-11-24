@@ -45,10 +45,34 @@ class Solution:
                 visited[i] = False
         backt()
         return res
+    def generateParenthesis(self, n: int) -> list[str]:
+        res = []
+        chck = []
+        sol = ""
+        def backt(p:str, n):
+            nonlocal sol
+            if len(sol) == 2*n and len(chck) == 0:
+                res.append(sol)
+                return
+            if len(sol) >= 2*n:
+                return
+            for i in range(2*n):
+                if p == "(":
+                    chck.append(p)
+                elif len(chck) != 0:
+                    chck.pop()
+                sol += p
+                backt("(", n)
+                sol = sol[:-1]
+                backt(")", n)
 
-
-        
+        backt("(", n)
+        return res            
+    
 
 nums = [1,2,3]
+n = 2
 sol = Solution()
-print(sol.permute(nums))
+print(sol.generateParenthesis(n))
+# arr = ["shozab"]
+# print(arr[0][1])
