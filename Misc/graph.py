@@ -1,88 +1,56 @@
-# graph = {
-#     "N0": ["N1", "N20"],
-#     "N1": ["N0", "N2"],
-#     "N2": ["N1", "N3"],
-#     "N3": ["N2", "N4"],
-#     "N4": ["N3", "N5", "N31"],
-#     "N5": ["N4", "N6"],
-#     "N6": ["N5", "N7"],
-#     "N7": ["N6", "N8"],
-#     "N8": ["N7", "N9", "N12"],
-#     "N9": ["N8", "N10", "N36"],
-#     "N10": ["N9", "N11"],
-#     "N11": ["N10", "N15", "N16"],
-#     "N12": ["N8", "N13"],
-#     "N13": ["N12", "N14", "N35"],
-#     "N14": ["N13", "N19", "N36"],
-#     "N15": ["N11", "N19"],
-#     "N16": ["N11", "N17", "N30", "N38"],
-#     "N17": ["N16", "N18"],
-#     "N18": ["N17", "N39"],
-#     "N19": ["N14", "N15", "N35", "N38", "N39"],
-#     "N20": ["N0", "N21"],
-#     "N21": ["N20", "N22"],
-#     "N22": ["N21", "N23"],
-#     "N23": ["N22", "N24"],
-#     "N24": ["N23", "N25"],
-#     "N25": ["N24", "N26", "N34"],
-#     "N26": ["N25", "N27"],
-#     "N27": ["N26", "N37"],
-#     "N28": ["N29", "N37"],
-#     "N29": ["N28", "N30"],
-#     "N30": ["N29", "N16"],
-#     "N31": ["N4", "N32"],
-#     "N32": ["N31", "N33", "N34"],
-#     "N33": ["N32"],
-#     "N34": ["N25", "N32"],
-#     "N35": ["N13", "N19"],
-#     "N36": ["N9", "N14"],
-#     "N37": ["N27", "N28"],
-#     "N38": ["N16", "N19"],
-#     "N39": ["N18", "N19"]
-# }
-# names = {
-#     "N0" : "Baloach Pull",
-#     "N1" : "Habitt",
-#     "N2" : "Fine house",
-#     "N3" : "Laal Kothi",
-#     "N4" : "Nurysery",
-#     "N51" : "FTC",
-#     "N6" : "PIDC Bridge",
-#     "N7" : "Fawara Chowk",
-#     "N8" : "Metropole",
-#     "N9" : "Zainab Market",
-#     "N10" : "Empress Market",
-#     "N11" : "Regal Chowk",
-#     "N12" : "Frere Hall",
-#     "N13" : "Press Club",
-#     "N14" : "Shaheen  Complex",
-#     "N15" : "Mereweather tower",
-#     "N16" : "Tower",
-#     "N17" : "Stock Exchange",
-#     "N18" : "NBP",
-#     "N19" : "Pakistan chowk",
-#     "N20" : "Awami markaz",
-#     "N21" : "PAF meuseum",
-#     "N22" : "Karsaz",
-#     "N23" : "National Stadium",
-#     "N24" : "Aga khan Hospital",
-#     "N25" : "Jail Chowrangi",
-#     "N26" : "Numaish",
-#     "N27" : "Mazar e Qaid",
-#     "N28" : "Guru Mandir",
-#     "N29" : "Jama Cloth",
-#     "N30" : "Bolton market",
-#     "N31" : "Tariq Road",
-#     "N32" : "Pechs blcok 6",
-#     "N33" : "Lee market",
-#     "N34" : "Dow lab",
-#     "N35" : "Sindh High Court",
-#     "N36" : "Arts Council",
-#     "N37" : Light
-#     "N38" : 
-#     "N39" : 
-# }
-# initial_state = "N0"
-# goal_state = "N39"
+class Graph:
+    def __init__(self, V):
+        self.vertices = V
+        self.graph:dict[str|int, list[str|int]] = {}
 
-# print()
+    def add_edges(self,v1, v2):
+        if v1 not in self.graph:
+            self.graph.update({v1 : []})
+        if v2 not in self.graph:
+            self.graph.update({v2 : []})
+        self.graph[v1].append(v2)
+        self.graph[v2].append(v1)
+
+    def dfs(self):
+        visited = {v: False for v in self.graph}
+        it = iter(self.graph)
+        nodes = []
+        def backt(v, graph):
+            nodes.append(v)
+            visited[v] = True
+            for i in graph[v]:
+                if visited[i]:
+                    continue
+                backt(i, graph)
+
+        for vertex in self.graph:
+            if not visited[vertex]:
+                backt(vertex, self.graph)
+        return nodes
+    def view_graph(self):
+        for i, j in enumerate(self.graph):
+            print(f"{j} : {self.graph[j]}")
+
+
+g1 = Graph(4)
+
+g1.add_edges('A', 'B')
+g1.add_edges('B', 'A')
+
+g1.add_edges('C', 'D')
+g1.add_edges('D', 'C')
+
+# F is disconnected
+
+g1.view_graph()
+print(g1.dfs())
+# test = {
+#     'A' : ['B', 'C', 'E'],
+#     'B' : ['A', 'C', 'D'],
+#     'C' : ['A', 'B', 'E'],
+#     'E' : ['A', 'C', 'D'],
+#     'D' : ['B', 'E']
+# }
+# it = iter(test)
+# print(next(it))
+# print(next(it))
