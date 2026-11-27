@@ -1,2 +1,2 @@
-]:
-                    continue
+
+                    visited[dr][dc] = Fals

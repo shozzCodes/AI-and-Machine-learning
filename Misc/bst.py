@@ -55,13 +55,29 @@ class Tree:
         dfs(root,tar)
         return path
 
+    def goodNodes(self, root: TreeNode) -> int:
+            good = 0
+            l = [float('-inf')]
+            def dfs(r:TreeNode):
+                nonlocal good
+                if r is None:
+                    return
+                if r.val >= l[-1]:
+                     good += 1
+                l.append(max(r.val, l[-1]))
+                dfs(r.left)
+                dfs(r.right)
+                l.pop()
+            dfs(root)
+
+            return good
+                 
 
 
 t = Tree()
 # preorder = [6, 2, 0, None, None, 4, 3, None, None, 5, None, None, 8, 7, None, None, 9, None, None]
-preorder = [3, 5, 6, None, None, 2, 7, None, None, 4, None, None, 1, 0, None, None, 8, None, None]
+preorder = [1,None,None]
 root = t.build(preorder)
 t.bfs(root)
 print()
-path = t.node_path(root, 4)
-print(path)
+print(t.goodNodes(root))
